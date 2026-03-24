@@ -2,6 +2,7 @@ object Main {
   def main(args: Array[String]): Unit = {
     val header = s"Reddit Post Parser\n${"=" * 40}"
 
+    // aca llamamos a la func que lee subscripciones con el nuevo parametro "path"
     val subscriptions: List[(String, String)] = 
       FileIO.readSubscriptions("subscriptions.json").getOrElse(List.empty)
 
