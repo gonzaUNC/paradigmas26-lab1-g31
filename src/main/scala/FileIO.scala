@@ -19,14 +19,16 @@ object FileIO {
 
       // este bloque arma la tupla mediante la func map
       val tuple = groupedLines.map(pairLines => {
-        val name = pairLines(0)
-        val url = pairLines(1)
+        // aca agregamos una limpieza, ya que compila pero sin la misma
+        // da error por caracteres ilegales 
+        val name = pairLines(0).split(":", 2)(1).replace("\"", "").replace(",", "").trim
+        val url = pairLines(1).split(":", 2)(1).replace("\"", "").replace(",", "").trim
 
         // devolvemos la tupla que armamos
         (name, url)
       })
 
-      tuple // lista de tuplas
+      tuple
     }
 
     // como buena practica pensando en mantener trasparencia referencial
