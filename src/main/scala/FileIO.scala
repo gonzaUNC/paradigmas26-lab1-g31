@@ -17,9 +17,16 @@ object FileIO {
       val filteredLines = lines.filter(line => line.contains("name") || line.contains("url"))
       val groupedLines = filteredLines.grouped(2).toList
 
-      println(groupedLines) // print de debug para ver como arma las sublists
+      // este bloque arma la tupla mediante la func map
+      val tuple = groupedLines.map(pairLines => {
+        val name = pairLines(0)
+        val url = pairLines(1)
 
-      List.empty[Subscription] 
+        // devolvemos la tupla que armamos
+        (name, url)
+      })
+
+      tuple // lista de tuplas
     }
 
     // como buena practica pensando en mantener trasparencia referencial
