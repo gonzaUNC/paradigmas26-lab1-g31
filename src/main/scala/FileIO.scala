@@ -18,7 +18,7 @@ object FileIO {
       val groupedLines = filteredLines.grouped(2).toList
 
       // este bloque arma la tupla mediante la func map
-      val tuple = groupedLines.map(pairLines => {
+      val subscriptions = groupedLines.map(pairLines => {
         // aca agregamos una limpieza, ya que compila pero sin la misma
         // da error por caracteres ilegales 
         val name = pairLines(0).split(":", 2)(1).replace("\"", "").replace(",", "").trim
@@ -28,7 +28,7 @@ object FileIO {
         (name, url)
       })
 
-      tuple
+      subscriptions
     }
 
     // como buena practica pensando en mantener trasparencia referencial
