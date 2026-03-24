@@ -13,6 +13,12 @@ object FileIO {
       // leemos el archivo y convertimos a una lista
       val lines: List[String] = source.getLines().toList
 
+      // este bloque se encarga de filtrar y agrupar lineas de nombre y url
+      val filteredLines = lines.filter(line => line.contains("name") || line.contains("url"))
+      val groupedLines = filteredLines.grouped(2).toList
+
+      println(groupedLines) // print de debug para ver como arma las sublists
+
       List.empty[Subscription] 
     }
 
