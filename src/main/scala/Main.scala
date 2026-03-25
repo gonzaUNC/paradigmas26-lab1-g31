@@ -1,22 +1,26 @@
+import FileIO.Post
+
 object Main {
   def main(args: Array[String]): Unit = {
-    val header = s"Reddit Post Parser\n${"=" * 40}"
+    println(s"Reddit Post Parser\n${"=" * 40}")
 
-    // aca llamamos a la func que lee subscripciones con el nuevo parametro "path"
-    val subscriptions: List[(String, String)] = 
-      FileIO.readSubscriptions("subscriptions.json").getOrElse(List.empty)
+    // leemos las suscripciones del archivo json
+    val subscriptions = FileIO.readSubscriptions("subscriptions.json").getOrElse(List.empty)
 
-    // usamos pattern matching para desestructurar la tupla de nombre y url
-    val allPosts: List[(String, String)] = subscriptions.map { case (name, url) =>
-      println(s"Fetching posts from subreddit: $name")
-      val posts = FileIO.downloadFeed(url)
-      (url, posts)
+    // para cada suscripcion descargamos y parseamos los posts
+    val allPosts: List[Post] = subscriptions.flatMap { case (name, url) =>
+      println(s"Descargando posts de: $name")
+      FileIO.fetchPosts(name, url).getOrElse(List.empty)
     }
 
-    val output = allPosts
-      .map { case (url, posts) => Formatters.formatSubscription(url, posts) }
+    // agrupamos por subreddit para mostrar cada uno por separado
+    val bySubreddit = allPosts.groupBy { case (subreddit, _, _, _) => subreddit }
+
+    val output = subscriptions
+      .map { case (name, _) => Formatters.formatSubscription(name, bySubreddit.getOrElse(name, List.empty)) }
       .mkString("\n")
 
     println(output)
+    println(s"\nTotal de posts: ${allPosts.length}")
   }
 }

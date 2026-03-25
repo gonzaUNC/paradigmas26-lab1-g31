@@ -1,10 +1,17 @@
+import FileIO.Post
 
 object Formatters {
 
-  // Pure function to format posts from a subscription
-  def formatSubscription(url: String, posts: String): String = {
-    val header = s"\n${"=" * 80}\nPosts from: $url \n${"=" * 80}"
-    val formattedPosts = posts.take(80)
-    header + "\n" + formattedPosts
+  def formatPost(post: Post): String = {
+    val (subreddit, title, selftext, date) = post
+    // mostramos un preview del texto para no llenar la pantalla
+    val preview = if (selftext.length > 200) selftext.take(200) + "..." else selftext
+    s"[$subreddit] $title\nFecha: $date\n$preview"
+  }
+
+  def formatSubscription(subreddit: String, posts: List[Post]): String = {
+    val header = s"\n${"=" * 80}\nSubreddit: $subreddit\n${"=" * 80}"
+    val body   = posts.map(formatPost).mkString("\n" + "-" * 40 + "\n")
+    header + "\n" + body
   }
 }
