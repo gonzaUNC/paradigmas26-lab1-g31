@@ -1,4 +1,5 @@
 import FileIO.Post
+import javax.swing.text.Position
 
 object Main {
   def main(args: Array[String]): Unit = {
@@ -13,8 +14,11 @@ object Main {
       FileIO.fetchPosts(name, url).getOrElse(List.empty)
     }
 
+    // realizamos el filtro de post no validos
+      val validPosts: List[Post] = FileIO.filterPosts(allPosts)
+
     // agrupamos por subreddit para mostrar cada uno por separado
-    val bySubreddit = allPosts.groupBy { case (subreddit, _, _, _) => subreddit }
+    val bySubreddit = validPosts.groupBy { case (subreddit, _, _, _) => subreddit }
 
     val output = subscriptions
       .map { case (name, _) => Formatters.formatSubscription(name, bySubreddit.getOrElse(name, List.empty)) }

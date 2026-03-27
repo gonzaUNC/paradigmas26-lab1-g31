@@ -66,4 +66,10 @@ object FileIO {
   // combina descarga y parseo en un solo paso
   def fetchPosts(subreddit: String, url: String): Option[List[Post]] =
     downloadFeed(url).flatMap(content => parsePosts(subreddit, content))
+
+  // elimina los posts que no tienen texto ni titulo
+  def filterPosts(posts: List[Post]): List[Post] = {
+    val filteredPost = posts.filter{ case (_, title, selftext, _) => title.trim.nonEmpty && selftext.trim.nonEmpty}
+    filteredPost
+  }
 }
