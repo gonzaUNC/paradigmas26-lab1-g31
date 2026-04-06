@@ -27,7 +27,7 @@ object WordCount {
   def counting(posts: List[FileIO.Post]): Map[String, Int] = {
 
     // paso 1: sacamos todas las palabras del texto de cada post
-    val words = posts.flatMap { case (_, _, selftext, _) =>
+    val words = posts.flatMap { case (_, _, selftext, _, _) =>
       selftext.split("\\s+")
     }
 
