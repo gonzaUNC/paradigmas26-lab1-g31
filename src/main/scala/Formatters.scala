@@ -9,9 +9,15 @@ object Formatters {
     s"[$subreddit] $title\nFecha: $date\n$preview"
   }
 
-  def formatSubscription(subreddit: String, posts: List[Post]): String = {
+  def formatSubscription(subreddit: String, posts: List[Post], words: Map[String, Int]): String = {
     val header = s"\n${"=" * 80}\nSubreddit: $subreddit\n${"=" * 80}"
     val body   = posts.map(formatPost).mkString("\n" + "-" * 40 + "\n")
-    header + "\n" + body
+
+    // palabras mas frecuentes ordenadas de mayor a menor
+    val sortedWords = words.toList.sortBy { case (_, count) => -count }
+    val wordSection = "\nPalabras mas frecuentes:\n" +
+      sortedWords.map { case (word, count) => s"  $word: $count" }.mkString("\n")
+
+    header + "\n" + body + "\n" + wordSection
   }
 }
