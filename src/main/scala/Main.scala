@@ -18,7 +18,7 @@ object Main {
     val validPosts: List[Post] = FileIO.filterPosts(allPosts)
 
     // agrupamos por subreddit para mostrar cada uno por separado
-    val bySubreddit = validPosts.groupBy { case (subreddit, _, _, _) => subreddit }
+    val bySubreddit = validPosts.groupBy { case (subreddit, _, _, _, _) => subreddit }
 
     // contamos frecuencia de palabras por subreddit
     val wordsBySubreddit = bySubreddit.map { case (name, posts) =>
