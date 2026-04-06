@@ -11,8 +11,8 @@ object FileIO {
   // tipo para representar una suscripcion: nombre y url del subreddit
   type Subscription = (String, String)
 
-  // tipo para un post: subreddit, titulo, texto, fecha formateada
-  type Post = (String, String, String, String)
+  // tipo para un post: subreddit, titulo, texto, fecha formateada y el score del post
+  type Post = (String, String, String, String, Int)
 
   def readSubscriptions(path: String): Option[List[Subscription]] = {
     val tryRead = Using(Source.fromFile(path)) { source =>
@@ -55,7 +55,8 @@ object FileIO {
         val selftext   = (data \ "selftext").extract[String]
         val createdUtc = (data \ "created_utc").extract[Double].toLong
         val date       = TextProcessing.formatDateFromUTC(createdUtc)
-        (subreddit, title, selftext, date)
+        val score      = (data \ "score").extract[Int]
+        (subreddit, title, selftext, date, score)
       }
       Some(posts)
     } catch {
@@ -69,7 +70,7 @@ object FileIO {
 
   // elimina los posts que no tienen texto ni titulo
   def filterPosts(posts: List[Post]): List[Post] = {
-    val filteredPost = posts.filter{ case (_, title, selftext, _) => title.trim.nonEmpty && selftext.trim.nonEmpty}
+    val filteredPost = posts.filter{ case (_, title, selftext, _, _) => title.trim.nonEmpty && selftext.trim.nonEmpty}
     filteredPost
   }
 }
