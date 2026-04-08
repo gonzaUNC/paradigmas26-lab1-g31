@@ -12,7 +12,7 @@ object FileIO {
   type Subscription = (String, String)
 
   // tipo para un post: subreddit, titulo, texto, fecha formateada, score y url del post
-  case class Post(subreddit: String, title: String, selftext: String, date: String, score: Int, url: String)
+  type Post = (String, String, String, String, Int, String)
 
   def readSubscriptions(path: String): Option[List[Subscription]] = {
     val tryRead = Using(Source.fromFile(path)) { source =>
