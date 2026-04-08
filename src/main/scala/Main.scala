@@ -17,6 +17,7 @@ object Main {
     // realizamos el filtro de post no validos
     val validPosts: List[Post] = FileIO.filterPosts(allPosts)
 
+    // realizamos el conteo de score de un post
     val totalScores = validPosts.foldLeft(0)((acum, post) => acum + post.score)
     println(s"\nScore total: $totalScores")
 
