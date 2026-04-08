@@ -71,7 +71,7 @@ object FileIO {
 
   // elimina los posts que no tienen texto ni titulo
   def filterPosts(posts: List[Post]): List[Post] = {
-    val filteredPost = posts.filter{ case (_, title, selftext, _, _) => title.trim.nonEmpty && selftext.trim.nonEmpty}
+    val filteredPost = posts.filter(p => p.title.trim.nonEmpty && p.selftext.trim.nonEmpty)
     filteredPost
   }
 }
