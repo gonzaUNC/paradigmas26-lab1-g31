@@ -18,6 +18,7 @@ object Main {
     val validPosts: List[Post] = FileIO.filterPosts(allPosts)
 
     val totalScores = validPosts.foldLeft(0)((acum, post) => acum + post.score)
+    println(s"\nScore total: $totalScores")
 
     // agrupamos por subreddit para mostrar cada uno por separado
     val bySubreddit = validPosts.groupBy { case (subreddit, _, _, _, _) => subreddit }
