@@ -27,9 +27,7 @@ object WordCount {
   def counting(posts: List[FileIO.Post]): Map[String, Int] = {
 
     // paso 1: sacamos todas las palabras del texto de cada post
-    val words = posts.flatMap { case (_, _, selftext, _, _) =>
-      selftext.split("\\s+")
-    }
+    val words = posts.flatMap(p => p.selftext.split("\\s+"))
 
     // paso 2: nos quedamos solo con las que empiezan con mayuscula
     val uppercase = words.filter(w => w.nonEmpty && w.head.isUpper)
