@@ -29,6 +29,7 @@ object Main {
       .map { case (name, _) =>
         val posts = bySubreddit.getOrElse(name, List.empty)
         val words = wordsBySubreddit.getOrElse(name, Map.empty)
+        val scoreTotal = Stats.calculateScore(posts)
         Formatters.formatSubscription(name, posts, words)
       }
       .mkString("\n")
