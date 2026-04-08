@@ -56,6 +56,7 @@ object FileIO {
         val createdUtc = (data \ "created_utc").extract[Double].toLong
         val date       = TextProcessing.formatDateFromUTC(createdUtc)
         val score      = (data \ "score").extract[Int]
+        val url        = (data \ "url").extract[String]
         (subreddit, title, selftext, date, score)
       }
       Some(posts)
