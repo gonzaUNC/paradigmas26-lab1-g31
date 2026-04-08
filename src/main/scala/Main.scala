@@ -30,6 +30,7 @@ object Main {
         val posts = bySubreddit.getOrElse(name, List.empty)
         val words = wordsBySubreddit.getOrElse(name, Map.empty)
         val scoreTotal = Stats.calculateScore(posts)
+        val firstFivePosts = Stats.getTopPosts(posts, 5)
         Formatters.formatSubscription(name, posts, words)
       }
       .mkString("\n")
