@@ -57,7 +57,7 @@ object FileIO {
         val date       = TextProcessing.formatDateFromUTC(createdUtc)
         val score      = (data \ "score").extract[Int]
         val url        = (data \ "url").extract[String]
-        Post(subreddit, title, selftext, date, score, url)
+        (subreddit, title, selftext, date, score, url)
       }
       Some(posts)
     } catch {
